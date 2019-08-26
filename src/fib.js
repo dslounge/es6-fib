@@ -72,7 +72,7 @@ export const getFibonacciAndPairSum = n => {
  */
 export const getFibonacciEvenSumForLimit = limit => {
   let n = 0;
-  let pair = { fib: 0, sum: 0 };
+  let pair;
   do {
     let nextPair = getFibonacciAndPairSum(n++);
     if (nextPair.fib > limit) {
