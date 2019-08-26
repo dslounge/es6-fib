@@ -11,6 +11,6 @@ Construct a solution using JavaScript that could be incorporated into a larger p
 
 # TODO
 
-- write out a regular naiveFib(n) function with tests
+- ✅ write out a regular naiveFib(n) function with tests
 - write out a regular memoFib(n) function with tests
 - write out a regular memoFibPairsSum(n) function with tests
