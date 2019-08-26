@@ -1,4 +1,4 @@
-import { naiveFib } from "./fib";
+import { naiveFib, memoFib } from "./fib";
 
 describe("fibonacci", () => {
   describe("naiveFib", () => {
@@ -16,6 +16,13 @@ describe("fibonacci", () => {
 
     it("returns 21 for n=8", () => {
       expect(naiveFib(8)).toBe(21);
+    });
+  });
+
+  // TODO: we need a test to check how many times the memoFib function got called, but mocking a recursive function isn't quick
+  describe("memoFib", () => {
+    it("returns 21 for n=8", () => {
+      expect(memoFib(8)).toBe(21);
     });
   });
 });

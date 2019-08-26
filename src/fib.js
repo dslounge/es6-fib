@@ -9,3 +9,20 @@ export const naiveFib = n => {
   }
   return naiveFib(n - 1) + naiveFib(n - 2);
 };
+
+/*
+ * We might want a more efficient fibonacci function that runs faster
+ */
+
+const fibMemo = {};
+export const memoFib = n => {
+  if (fibMemo[n] !== undefined) {
+    return fibMemo[n];
+  }
+  if (n == 0) {
+    return 0;
+  } else if (n == 1) {
+    return 1;
+  }
+  return memoFib(n - 1) + memoFib(n - 2);
+};
