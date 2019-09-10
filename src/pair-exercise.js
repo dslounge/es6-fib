@@ -15,6 +15,8 @@ const DIME = 10;
 const NICKEL = 5;
 const PENNY = 1;
 
+const COINS = { quarter: QUARTER, dime: DIME, nickel: NICKEL, penny: PENNY };
+
 export const numberErrorMsg = "input is not a number";
 
 export const giveChange = cents => {
@@ -23,21 +25,15 @@ export const giveChange = cents => {
   }
 
   let remainder = cents;
-
-  // mod by quarters
-  const quarters = Math.floor(remainder / QUARTER);
-  remainder = remainder % QUARTER;
-  // mod by dimes
-  const dimes = Math.floor(remainder / DIME);
-  remainder = remainder % DIME;
-  // mod by nickels
-  const nickels = Math.floor(remainder / NICKEL);
-  remainder = remainder % NICKEL;
+  const coins = Object.keys(COINS).map(coinKey => {
+    const coin = COINS[coinKey];
+    const numCoins = Math.floor(remainder / coin);
+    remainder = remainder % coin;
+    return numCoins;
+  });
 
   return {
-    quarters,
-    dimes,
-    nickels,
+    ...coins,
     pennies: remainder,
   };
 };
