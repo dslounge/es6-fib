@@ -1,13 +1,15 @@
-import { giveChange, numberErrorMsg } from "./pair-exercise";
+import {
+  giveChange,
+  numberErrorMsg,
+  changeUnavailableMsg,
+} from "./pair-exercise";
 
 describe("giveChange", () => {
   // basic input validation
   it("returns an error if input is not  number", () => {
-    try {
-      const testVal = giveChange("monkeys");
-    } catch (e) {
-      expect(e.message).toEqual(numberErrorMsg);
-    }
+    expect(() => {
+      giveChange("monkeys");
+    }).toThrow(numberErrorMsg);
   });
 
   // computation tests
@@ -43,5 +45,42 @@ describe("giveChange", () => {
       pennies: 1,
     };
     expect(testVal).toEqual(expectedValue);
+  });
+
+  it("handles change given a custom set of coins", () => {
+    const availableCoins = [
+      {
+        name: "60cent",
+        value: 60,
+      },
+      {
+        name: "3cent",
+        value: 3,
+      },
+    ];
+
+    const testVal = giveChange(66, availableCoins);
+    const expectedValue = {
+      "60cent": 1,
+      "3cent": 2,
+    };
+    expect(testVal).toEqual(expectedValue);
+  });
+
+  it("throws an error when change can't be given", () => {
+    const availableCoins = [
+      {
+        name: "60cent",
+        value: 60,
+      },
+      {
+        name: "3cent",
+        value: 3,
+      },
+    ];
+
+    expect(() => {
+      giveChange(67, availableCoins);
+    }).toThrow(changeUnavailableMsg);
   });
 });

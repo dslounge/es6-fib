@@ -30,24 +30,29 @@ const COINS = [
   },
 ];
 export const numberErrorMsg = "input is not a number";
+export const changeUnavailableMsg = "change isn't available";
 
-export const giveChange = cents => {
+export const giveChange = (cents, availableCoins = COINS) => {
   if (isNaN(cents)) {
-    throw Error("input is not a number");
+    throw Error(numberErrorMsg);
   }
 
   // sort the coins from biggest to smallest
-  const sortedCoins = COINS.sort((a, b) => {
+  const sortedCoins = availableCoins.sort((a, b) => {
     return a.value < b.value;
   });
 
   let remainder = cents;
   const returnObj = {};
-  const coins = COINS.forEach(coin => {
+  const coins = availableCoins.forEach(coin => {
     const numCoins = Math.floor(remainder / coin.value);
     remainder = remainder % coin.value;
     returnObj[coin.name] = numCoins;
   });
+
+  if (remainder > 0) {
+    throw Error(changeUnavailableMsg);
+  }
 
   return returnObj;
 };
