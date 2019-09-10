@@ -10,13 +10,25 @@
 // }
 //
 
-const QUARTER = 25;
-const DIME = 10;
-const NICKEL = 5;
-const PENNY = 1;
-
-const COINS = { quarter: QUARTER, dime: DIME, nickel: NICKEL, penny: PENNY };
-
+// COINS is out of order
+const COINS = [
+  {
+    name: "dimes",
+    value: 10,
+  },
+  {
+    name: "quarters",
+    value: 25,
+  },
+  {
+    name: "pennies",
+    value: 1,
+  },
+  {
+    name: "nickels",
+    value: 5,
+  },
+];
 export const numberErrorMsg = "input is not a number";
 
 export const giveChange = cents => {
@@ -24,16 +36,18 @@ export const giveChange = cents => {
     throw Error("input is not a number");
   }
 
-  let remainder = cents;
-  const coins = Object.keys(COINS).map(coinKey => {
-    const coin = COINS[coinKey];
-    const numCoins = Math.floor(remainder / coin);
-    remainder = remainder % coin;
-    return numCoins;
+  // sort the coins from biggest to smallest
+  const sortedCoins = COINS.sort((a, b) => {
+    return a.value < b.value;
   });
 
-  return {
-    ...coins,
-    pennies: remainder,
-  };
+  let remainder = cents;
+  const returnObj = {};
+  const coins = COINS.forEach(coin => {
+    const numCoins = Math.floor(remainder / coin.value);
+    remainder = remainder % coin.value;
+    returnObj[coin.name] = numCoins;
+  });
+
+  return returnObj;
 };
